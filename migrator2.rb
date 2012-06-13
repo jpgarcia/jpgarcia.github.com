@@ -70,4 +70,4 @@ module Jekyll
 end
 
 
-Jekyll::WordpressDotCom.process("~/Downloads/wordpress.2012-05-31.xml")
+Jekyll::WordpressDotCom.process("/Users/juanpablogarcia/Downloads/wordpress.2012-05-31.xml")
