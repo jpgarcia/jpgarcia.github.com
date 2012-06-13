@@ -1,0 +1,50 @@
+---
+layout: post
+title: Dropzone extension leveraging Ruby waz-storage gem
+tags:
+- Dropzone
+- ruby
+- Windows Azure
+status: publish
+type: post
+published: true
+meta:
+  _edit_lock: '1257775931'
+  _edit_last: '6'
+---
+It's been a long time since my last post, so today I want to share with you my experience on using the <a title="waz-storage" href="http://github.com/johnnyhalife/waz-storage">waz-storage gem</a>, created by my friend <a title="Johnny Halife" href="http://blogs.southworks.net/jhalife/">Johhny Halife</a>. If you are not aware about his amazing job you should check <a href="http://blogs.southworks.net/jhalife/2009/10/16/announcing-ruby-windows-azure-storage-sdk-v05/">this post</a> to get more context about what I'm going to show you.
+<h2>What can I do?</h2>
+After reviewing Johnny's code I was very excited on creating something and to start playing with that toy, but obviously the question was WHAT?
+
+The answer came to my mind while reading a blog about an application for Mac OSX desktop called <a href="http://aptonic.com/">Dropzone</a>. This is a excerpt taken from <a href="http://aptonic.com/">Dropzone</a>'s website.
+
+<em>"Drag a file onto the dock icon and your fully customizable grid of destinations flies smoothly out using core animation. Drop the file onto a destination and Dropzone will take care of the rest. Whether you're installing an app, uploading a file to an FTP server or sharing your photos on Flickr."</em>
+
+There is a section regarding how to extend the Dropzone's features, and how to contribute creating plugins. Dropzone can easily be extended using simple ruby scripts.
+
+So, I thought about writing a script that allow users to easily drag an drop files from your computer and store them as Blobs on the Windows Azure Storage Services.
+<h2>Coding for fun!</h2>
+I started reading the <a href="http://aptonic.com/dropzone/documentation/">Dropzone Scripting API</a> documentation and I was surprised how easy it was. There are only two methods to implement which are <strong>dragged</strong>,<strong> clicked</strong> and that's it.
+
+Beyond the simplicity that gives the Dropzone's API, I had the joy of coding in Ruby and the <a href="http://github.com/johnnyhalife/waz-storage">waz-storage gem</a> <span>easiness</span><a href="http://blogs.southworks.net/jhalife/"></a>.
+
+You can find the source code on the following url <a href="http://github.com/jpgarcia/dropzone-user-scripts/blob/master/WAZBlobs.dropzone">http://github.com/jpgarcia/dropzone-user-scripts/blob/master/WAZBlobs.dropzone</a>
+<h2>How can you try it?</h2>
+Installation and configuration:
+<ol>
+	<li>Download the Dropzone program <a href="http://aptonic.com/index.php">from here</a></li>
+	<li>Install the <strong>waz-storage gem</strong> if the gem isn't installed yet
+<span style="color: #333333"><em>sudo gem install waz-storage --version &gt;= 0.5.4 --source http://gemcutter.org</em></span></li>
+	<li>Download the dropzone extension that I created from the <a href="http://github.com/jpgarcia/dropzone-user-scripts">github repositories</a>. The file is called <span style="color: #333333"><em><strong>WAZBlobs.dropzone</strong></em></span></li>
+	<li><span style="color: #333333"><span style="color: #000000">Open the <span style="color: #333333"><em><strong>WAZBlobs.dropzone</strong></em></span> file and provide your Windows Azure Services credentials as depicted below:
+</span></span><a href="http://blogs.southworks.net/jpgarcia/files/2009/10/picture-3.png"><img class="alignnone size-medium wp-image-56" src="http://blogs.southworks.net/jpgarcia/files/2009/10/picture-3.png" alt="" width="300" height="282" /></a></li>
+</ol>
+The script and the functionality is very simple:
+<ol>
+	<li>Drag and drop your files to the Azure's icon on the Dropzone panel
+<a href="http://blogs.southworks.net/jpgarcia/files/2009/10/wasdrag.png"><img class="alignnone size-medium wp-image-57" src="http://blogs.southworks.net/jpgarcia/files/2009/10/wasdrag.png" alt="" width="300" height="265" /></a></li>
+	<li>The files will be uploaded to a <strong>public</strong> container called <strong>dropzone</strong>.</li>
+	<li>The following picture shows how the <strong>Picture 3</strong>, that I dragged &amp; dropped above, is already on Windows Azure Blobs servers. So I will play a little bit with the console to show you that the Blob is already there :)
+<a href="http://blogs.southworks.net/jpgarcia/files/2009/10/console.png"><img class="alignnone size-full wp-image-58" src="http://blogs.southworks.net/jpgarcia/files/2009/10/console.png" alt="" width="499" height="255" /></a></li>
+</ol>
+On my next post I will show you a new application I'm developing on <a href="http://heroku.com">Heroku</a> that uses the same gem to manage the Blobs via Web. Stay tuned!

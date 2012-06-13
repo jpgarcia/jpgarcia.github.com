@@ -1,0 +1,30 @@
+---
+layout: post
+title: Microsoft Source Analysis for C# 4.2 was published
+tags:
+- Code Quality
+status: publish
+type: post
+published: true
+meta:
+  _edit_lock: '1231662694'
+  _edit_last: '6'
+---
+<div style="text-align:right"><a href="http://www.jpgarcia.com.ar/index.php/2008/05/25/microsoft-source-analysis-for-c-42-publicado/">Spanish Version</a></div>
+Microsoft <a href="http://code.msdn.microsoft.com/sourceanalysis" target="_blank">has published</a> a great tool called <strong>Microsoft Source Analysis for C#</strong>, formerly known as <strong>StyleCop</strong>.
+
+This tool allow us to review and improve our source code quality. It's is fully integrated with Visual Studio, so with a single right click in a solution, project or file, we can check our code against the best practices defined in a series of rules depicted below.
+
+You will find a detailed explanation on the <a href="http://blogs.msdn.com/sourceanalysis/archive/2008/05/23/announcing-the-release-of-microsoft-source-analysis.aspx" target="_blank">Announcing the release of Microsoft Source Analysis for C#</a> post and download the latest bits from <a href="http://code.msdn.microsoft.com/sourceanalysis/Release/ProjectReleases.aspx" target="_blank">here</a>.
+
+ <img src="http://yauykg.blu.livefilestore.com/y1pe7Q3tmlVXP5WbJ-VHlcPtOO6pcgJQ4O0O666njmu0CL82-I4crAoGjSc6JmBuqXAWdD4tYWHOepWVE376B9oEQ/runningSourceAnalysis.png" alt="" />
+
+Also you can customize which rules should be checked using the built-in configuration tool.
+
+<img src="http://yauykg.blu.livefilestore.com/y1pe7Q3tmlVXP4EqzwXIlEHe7drC11rByoy2ZSwPu6MUJNa3DsJVs4vs3kRFH8Gu5AuNhZNAVGJaU9igixAZ8hoSw/configuringSourceAnalysis.png" alt="" />
+
+Finally, another good point is that we can integrate that tool on our build process with <strong>MSBuild</strong>. I recomend you the <strong>Jason Allor's</strong> <a href="http://blogs.msdn.com/sourceanalysis/pages/source-analysis-msbuild-integration.aspx" target="_blank">blog post</a> on the <a href="http://blogs.msdn.com/sourceanalysis/" target="_blank">Source Analysis Blog page</a> where he explains how to do that.
+
+Here is another <a href="http://blogs.msdn.com/msbuild/archive/2008/05/23/microsoft-source-analysis-releases-to-web.aspx" target="_blank">good post</a> from <a href="http://blogs.msdn.com/msbuild/default.aspx" target="_blank">MSBuild Team Blog</a> also, announcing this release.
+
+Enjoy it and say goodbye to the documents with code-standards :)

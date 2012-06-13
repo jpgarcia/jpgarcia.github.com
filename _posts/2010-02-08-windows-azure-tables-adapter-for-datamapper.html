@@ -1,0 +1,103 @@
+---
+layout: post
+title: Windows Azure Tables adapter for DataMapper
+tags:
+- azure
+- DataMapper
+- Emerging Technology
+- ruby
+- Windows Azure
+status: publish
+type: post
+published: true
+meta:
+  _edit_lock: '1287251127'
+  _edit_last: '6'
+---
+<h1>The Past</h1>
+Last Friday, we shipped the first Major version (v1.0.0) of the Windows Azure Storage API gem for ruby, started a few months ago by my friend <a href="http://blogs.southworks.net/jhalife/">Johnny Halife</a>. As it is an open-source project, I had the opportunity to contribute with:
+<ul>
+	<li>Support for table service to query, get_one, insert, update, merge and delete entities.</li>
+	<li>Support for running against the Storage Developement Fabriq shipped with Microsoft SDK.</li>
+	<li>Signature support for Tables service according to <a href="http://msdn.microsoft.com/en-us/library/dd179428.aspx">msdn.microsoft.com/en-us/library/dd179428.aspx</a></li>
+	<li>Support to enumerate, create, and delete tables on give storage account.</li>
+	<li>Give feedback to Improve the support for stacked connection management.</li>
+</ul>
+This release of waz-storage for ruby includes numerous features collected thru 0.5.6 to 1.0.0, for more information you can visit the <a href="http://waz-storage.heroku.com/">http://waz-storage.heroku.com/</a> where you will find all the gem documentation, or if you like to read the source code, contribute or giving us feedback you can get it from on <a href="http://github.com/johnnyhalife/waz-storage/">http://github.com/johnnyhalife/waz-storage</a>.
+<h2>The Present</h2>
+One of the objectives of having Tables support on the gem was to have an interface to interact with Tables and Entities that we can consume from an adapter as we usually do with our favorite ORM written in ruby which is DataMapper.
+
+This is why this weekend was pretty much to make the dream come true, creating a new project on github called <strong>dm-waztables-adapter</strong> (<a href="http://github.com/jpgarcia/dm-waztables-adapter">http://github.com/jpgarcia/dm-waztables-adapter</a>) and spitting some lines of code.
+<h3>Writing the adapter</h3>
+As everything in Ruby wonderful world, it was really easy to have a first version running with the features provided by Datamapper.
+
+It took me a few hours to write down <strong>85 lines of code </strong>to cover the whole adapter (Create, Read, Update and Delete methods)
+
+Sorry, I'm forgetting the aditional 30 minutes I spent on writing <strong>32 more lines</strong> to cover the Migrations stuff. So you won't worry about creating the tables when you design your models (As Windows Azure doesn't have support for schemas inside tables, migrations exists just to make sure that you have the tables. It won't modify attributes of existing data).
+
+Below you will find some code samples. I hope you like it.
+<h3>Getting started</h3>
+<pre>sudo gem install dm-waztables-adapter --source http://gemcutter.org</pre>
+<h3>Usage</h3>
+<pre>require 'dm-waztables-adapter'
+
+# set up a DataMapper with your Windwows Azure account
+DataMapper.setup(:default, { :adapter =&gt; 'WAZTables',
+                                         :account_name =&gt; 'name',
+                                         :access_key =&gt; 'your_access_key' })
+
+# define a new model
+class Guitarist
+    include DataMapper::Resource
+
+    property :id, String, :key =&gt; true
+    property :name, String
+    property :age, Integer
+end
+
+# set up database table on Windows Azure for a specific model
+Guitarist.auto_migrate! # (destructive)
+Guitarist.auto_upgrade! # (safe)
+
+# set up database table on Windows Azure for all defined models
+Datamapper.auto_migrate! # (destructive)
+Datamapper.auto_upgrade! # (safe)
+
+# play with DataMapper as usual
+Guitarist.create(:id =&gt; '1', :name =&gt; 'Ritchie Blackmore', :age =&gt; 65)
+
+yngwie = Guitarist.new(:id =&gt; '2', :name =&gt; 'Yngwio Malmsteen', :age =&gt; 46)
+yngwie.name = "Yngwie Malmsteen"
+yngwie.save
+
+# retrieving a unique record by its id
+ritchie = Guitarist.get('1')
+ritchie.age # =&gt; 65
+
+# updating records
+ritchie.age = 66
+ritchie.save
+
+# retrieving all guitarists
+    Guitarist.all.length # =&gt; 2
+
+# performing queries
+    older_guitar_players = Guitarist.all( { :age.gte =&gt; 50 } )
+
+# deleting records
+older_guitar_players.destroy!</pre>
+<h3>TODO</h3>
+<ul>
+	<li>Allow users to define the model partition key by using :partition_key =&gt; true option on the property.</li>
+	<li>Allow users to set the partition key as an additional attribute of the model with a lambda as default value.</li>
+	<li>Allow users to set the partition key as a method on the model.</li>
+	<li>Implement “in” operator in queries</li>
+	<li>Implement “order” query option</li>
+	<li>Retrieve more than 1000 fields using Windows Azure :continuation_token</li>
+</ul>
+<h3>Known Issues</h3>
+<ul>
+	<li>Like statements are not working since Microsoft service API is throwing a NotImplemented exception when
+using <em>startswith</em> and <em>endswith</em> filters (<a href="http://msdn.microsoft.com/en-us/library/dd541448.aspx">more information here</a>)</li>
+	<li>There's no way to tell thru the entity which is the partition key of our entity, so there's no out-of-the-box load balancing support (for mor info on the tables model that a look at http://msdn.microsoft.com/en-us/library/dd179338.aspx)</li>
+</ul>

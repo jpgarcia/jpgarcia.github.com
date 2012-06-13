@@ -1,0 +1,42 @@
+During the last week I was working for an identity project related to the new <strong>U-Prove CTP</strong> version of the <strong>Active Directory Federation Services 2.0</strong>.
+
+As you know, when working with new technologies, it is very common to find blocking issues like this. This is why I want to share with you my experience.
+<h2>Symptom</h2>
+AD FS certificates cannot be changed neither from the Management Console nor PowerShell Cmdlet. You may receive an error message like <em><strong>No certificate with thumbprint "......." found</strong></em>.
+
+<img src="http://dl.dropbox.com/u/1432886/blogs/jpgarcia/adfs-cert/1a.png" alt="" />
+<h2>Solution</h2>
+<ol>
+	<li>Open the <strong>Microsoft Management Console</strong> and add a new <strong>Certificates</strong> Snap-in for <strong>Computer Account </strong>
+<ul>
+	<li> Go to the <strong>Personal</strong> / <strong>Certificates</strong> node and open the new certificate you are going to use by doble-clicking on it</li>
+	<li>Select the <strong>Details</strong> tab and copy the <strong>Thumbprint</strong> value</li>
+</ul>
+</li>
+	<li>Open <strong>SQL Server Management Console </strong>
+<ul>
+	<li>Select the <strong>AdFsConfiguration</strong> database<strong>Note</strong>: If you are using the Microsoft Internal Database you can use this connection string ( <em>\\.\pipe\mssql$microsoft##ssee\sql\query </em>)</li>
+	<li>Open the <strong>IdentityServerPolicy.ServiceSettings</strong> table and copy the <strong>ServiceSettingsData</strong> field value (XML) to a Notepad</li>
+	<li>Find the missing <strong>Thumbprint</strong> values you got on the AD FS error message</li>
+	<li>Replace the found values by the new one certificate's Thumbprint without empty spaces.<strong>
+</strong></li>
+	<li>Update the <strong>ServiceSettingsData</strong><span> field with the new XML configuration<strong>
+Note</strong>: XML contents must not BE tidy
+
+</span></li>
+</ul>
+</li>
+	<li><span>Go to to </span><span> and refresh the Certificates node
+</span></li>
+	<li><span>At this point you should see listed the new certificate
+</span></li>
+	<li>If you are changing the <strong>Service Communications Certificate</strong>, open the <strong>Internet Information Service (IIS) Manager </strong>
+<ul>
+	<li>Select the <strong>Default Website
+</strong></li>
+	<li>Click on <strong>Bindings...</strong> action, go to the <strong>https</strong> row ad click on <strong>Edit...
+</strong></li>
+	<li>Select the new certificate from the <strong>SSL certificate</strong> combo-box and click OK (<strong>Note: </strong><span>if you see an error message, click ok</span>)</li>
+</ul>
+</li>
+</ol>
