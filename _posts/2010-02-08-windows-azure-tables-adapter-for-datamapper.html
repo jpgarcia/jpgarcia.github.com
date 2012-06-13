@@ -15,7 +15,11 @@ meta:
   _edit_last: '6'
 ---
 <h1>The Past</h1>
-Last Friday, we shipped the first Major version (v1.0.0) of the Windows Azure Storage API gem for ruby, started a few months ago by my friend <a href="http://blogs.southworks.net/jhalife/">Johnny Halife</a>. As it is an open-source project, I had the opportunity to contribute with:
+
+<p>
+	Last Friday, we shipped the first Major version (v1.0.0) of the Windows Azure Storage API gem for ruby, started a few months ago by my friend <a href="http://blogs.southworks.net/jhalife/">Johnny Halife</a>. As it is an open-source project, I had the opportunity to contribute with:
+</p>
+
 <ul>
 	<li>Support for table service to query, get_one, insert, update, merge and delete entities.</li>
 	<li>Support for running against the Storage Developement Fabriq shipped with Microsoft SDK.</li>
@@ -23,23 +27,40 @@ Last Friday, we shipped the first Major version (v1.0.0) of the Windows Azure St
 	<li>Support to enumerate, create, and delete tables on give storage account.</li>
 	<li>Give feedback to Improve the support for stacked connection management.</li>
 </ul>
-This release of waz-storage for ruby includes numerous features collected thru 0.5.6 to 1.0.0, for more information you can visit the <a href="http://waz-storage.heroku.com/">http://waz-storage.heroku.com/</a> where you will find all the gem documentation, or if you like to read the source code, contribute or giving us feedback you can get it from on <a href="http://github.com/johnnyhalife/waz-storage/">http://github.com/johnnyhalife/waz-storage</a>.
+
+<p>
+	This release of waz-storage for ruby includes numerous features collected thru 0.5.6 to 1.0.0, for more information you can visit the <a href="http://waz-storage.heroku.com/">http://waz-storage.heroku.com/</a> where you will find all the gem documentation, or if you like to read the source code, contribute or giving us feedback you can get it from on <a href="http://github.com/johnnyhalife/waz-storage/">http://github.com/johnnyhalife/waz-storage</a>.
+</p>
+
 <h2>The Present</h2>
-One of the objectives of having Tables support on the gem was to have an interface to interact with Tables and Entities that we can consume from an adapter as we usually do with our favorite ORM written in ruby which is DataMapper.
 
-This is why this weekend was pretty much to make the dream come true, creating a new project on github called <strong>dm-waztables-adapter</strong> (<a href="http://github.com/jpgarcia/dm-waztables-adapter">http://github.com/jpgarcia/dm-waztables-adapter</a>) and spitting some lines of code.
+<p>
+	One of the objectives of having Tables support on the gem was to have an interface to interact with Tables and Entities that we can consume from an adapter as we usually do with our favorite ORM written in ruby which is DataMapper.
+</p>
+<p>
+	This is why this weekend was pretty much to make the dream come true, creating a new project on github called <strong>dm-waztables-adapter</strong> (<a href="http://github.com/jpgarcia/dm-waztables-adapter">http://github.com/jpgarcia/dm-waztables-adapter</a>) and spitting some lines of code.
+</p>
+
 <h3>Writing the adapter</h3>
-As everything in Ruby wonderful world, it was really easy to have a first version running with the features provided by Datamapper.
+<p>
+	As everything in Ruby wonderful world, it was really easy to have a first version running with the features provided by Datamapper.
+</p>
+<p>
+	It took me a few hours to write down <strong>85 lines of code </strong>to cover the whole adapter (Create, Read, Update and Delete methods)
+</p>
 
-It took me a few hours to write down <strong>85 lines of code </strong>to cover the whole adapter (Create, Read, Update and Delete methods)
+<p>
+	Sorry, I'm forgetting the aditional 30 minutes I spent on writing <strong>32 more lines</strong> to cover the Migrations stuff. So you won't worry about creating the tables when you design your models (As Windows Azure doesn't have support for schemas inside tables, migrations exists just to make sure that you have the tables. It won't modify attributes of existing data).
+</p>
 
-Sorry, I'm forgetting the aditional 30 minutes I spent on writing <strong>32 more lines</strong> to cover the Migrations stuff. So you won't worry about creating the tables when you design your models (As Windows Azure doesn't have support for schemas inside tables, migrations exists just to make sure that you have the tables. It won't modify attributes of existing data).
+<p>Below you will find some code samples. I hope you like it.</p>
 
-Below you will find some code samples. I hope you like it.
 <h3>Getting started</h3>
 <pre>sudo gem install dm-waztables-adapter --source http://gemcutter.org</pre>
 <h3>Usage</h3>
-<pre>require 'dm-waztables-adapter'
+
+{% highlight ruby %}
+require 'dm-waztables-adapter'
 
 # set up a DataMapper with your Windwows Azure account
 DataMapper.setup(:default, { :adapter =&gt; 'WAZTables',
@@ -79,13 +100,16 @@ ritchie.age = 66
 ritchie.save
 
 # retrieving all guitarists
-    Guitarist.all.length # =&gt; 2
+Guitarist.all.length # =&gt; 2
 
 # performing queries
-    older_guitar_players = Guitarist.all( { :age.gte =&gt; 50 } )
+older_guitar_players = Guitarist.all( { :age.gte =&gt; 50 } )
 
 # deleting records
-older_guitar_players.destroy!</pre>
+older_guitar_players.destroy!
+{% endhighlight %}
+
+
 <h3>TODO</h3>
 <ul>
 	<li>Allow users to define the model partition key by using :partition_key =&gt; true option on the property.</li>
@@ -95,6 +119,7 @@ older_guitar_players.destroy!</pre>
 	<li>Implement “order” query option</li>
 	<li>Retrieve more than 1000 fields using Windows Azure :continuation_token</li>
 </ul>
+
 <h3>Known Issues</h3>
 <ul>
 	<li>Like statements are not working since Microsoft service API is throwing a NotImplemented exception when

@@ -13,24 +13,48 @@ meta:
   _edit_lock: '1312745786'
   _wp_old_slug: ''
 ---
-I got really exited after <a href="http://www.youtube.com/watch?v=jo_B4LTHi3I&amp;feature=player_embedded">watching the Introduction to Node.js video</a> performed by Ryan Dahl the creator of <a href="http://nodejs.org/">Node.js</a>, just after that I installed node in my computer and started playing a little bit with Javascript which is one of the languages that I love.
 
-A few days ago I announced the release of the first version (0.0.1) of the <a title="windows azure storage library for node.js" href="waz-storage-js">waz-storage-js</a> library I wrote in <a href="http://nodejs.org/">Node.js</a>. The code is based on the <a href="https://github.com/johnnyhalife/waz-storage">waz-storage</a> ruby library written by friend and colleague <a href="http://blogs.southworks.net/jhalife/">Johnny Halife</a> who let me contribute with the <strong>Tables</strong> service and the <a href="https://github.com/jpgarcia/dm-waztables-adapter">dm-waztables-adapter</a> for datamapper.
+<p>
+    I got really exited after <a href="http://www.youtube.com/watch?v=jo_B4LTHi3I&amp;feature=player_embedded">watching the Introduction to Node.js video</a> performed by Ryan Dahl the creator of <a href="http://nodejs.org/">Node.js</a>, just after that I installed node in my computer and started playing a little bit with Javascript which is one of the languages that I love.
+</p>
 
-This version allows you to deal only with <strong>Blobs</strong> but my plan is to include also <strong>Tables</strong> and <strong>Queues</strong> in the near future.
+<p>
+    A few days ago I announced the release of the first version (0.0.1) of the <a title="windows azure storage library for node.js" href="waz-storage-js">waz-storage-js</a> library I wrote in <a href="http://nodejs.org/">Node.js</a>. The code is based on the <a href="https://github.com/johnnyhalife/waz-storage">waz-storage</a> ruby library written by friend and colleague <a href="http://blogs.southworks.net/jhalife/">Johnny Halife</a> who let me contribute with the <strong>Tables</strong> service and the <a href="https://github.com/jpgarcia/dm-waztables-adapter">dm-waztables-adapter</a> for datamapper.
+</p>
 
-Remember that you can always fork the code hosted on <a href="https://github.com/jpgarcia/waz-storage-js">Github</a> and contribute to speed up the thing!
+<p>
+    This version allows you to deal only with <strong>Blobs</strong> but my plan is to include also <strong>Tables</strong> and <strong>Queues</strong> in the near future.
+</p>
+
+<p>
+    Remember that you can always fork the code hosted on <a href="https://github.com/jpgarcia/waz-storage-js">Github</a> and contribute to speed up the thing!
+</p>
+
 <h2>Let's play with it and install the package</h2>
-The library is available as an <a href="http://npmjs.org/">npm package</a>. To install, run the following command:
-<pre style="font-size: 12px;color: #444;background-color: #eee;border: solid 1px #ddd;padding: 5px;margin-bottom: 20px">npm install waz-storage-js</pre>
+
+<p>
+    The library is available as an <a href="http://npmjs.org/">npm package</a>. To install, run the following command:
+</p>
+
+{% highlight bash %}
+npm install waz-storage-js
+{% endhighlight %}
+
 <h2>Configure your account information</h2>
-<pre style="font-size: 12px;color: #444;background-color: #eee;border: solid 1px #ddd;padding: 5px;margin-bottom: 20px">var waz = waz.establishConnection({
+
+{% highlight javascript %}
+var waz = waz.establishConnection({
         accountName: 'your_account_name'
         , accountKey: 'your_key',
         , useSsl: false
-      });</pre>
+      });
+{% endhighlight %}
+
+
 <h2>And finally read and write data from you Blobs</h2>
-<pre style="font-size: 12px;color: #444;background-color: #eee;border: solid 1px #ddd;padding: 5px;margin-bottom: 20px">// Creating a new container
+
+{% highlight javascript %}
+// Creating a new container
 waz.blobs.container.create('myContainer', function(err, result){
 });
 
@@ -78,7 +102,13 @@ waz.blobs.container.find('myContainer', function(err, container){
 
 // Deleting containers
 waz.blobs.container.delete('myContainer', function(err){
-});</pre>
-Microsoft is working to <a href="http://blogs.msdn.com/b/interoperability/archive/2011/06/23/microsoft-working-with-joyent-and-the-node-community-to-bring-node-js-to-windows.aspx">bring Node.js to both Windows and Azure</a> and I hope my contribution (and why not yours) helps developers in future projects.
+});
+{% endhighlight %}
 
-Stay tuned! I wil keep you posted.
+<p>
+    Microsoft is working to <a href="http://blogs.msdn.com/b/interoperability/archive/2011/06/23/microsoft-working-with-joyent-and-the-node-community-to-bring-node-js-to-windows.aspx">bring Node.js to both Windows and Azure</a> and I hope my contribution (and why not yours) helps developers in future projects.
+</p>
+
+<p>
+    Stay tuned! I wil keep you posted.
+</p>
