@@ -1,0 +1,27 @@
+---
+layout: nil
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Juan Pablo Garcia's blog</title>
+ <link href="http://jpgarcia.com.ar/feed/" rel="self"/>
+ <link href="http://jpgarcia.com.ar/"/>
+ <updated>{{ site.time | date_to_xmlschema }}</updated>
+ <id>http://jpgarcia.com.ar/</id>
+ <author>
+   <name>Juan Pablo Garcia</name>
+   <email>juanpablogarcia@gmail.com</email>
+ </author>
+
+ {% for post in site.posts %}
+ <entry>
+   <title>{{ post.title }}</title>
+   <link href="http://http://jpgarcia.com.ar{{ post.url }}"/>
+   <updated>{{ post.date | date_to_xmlschema }}</updated>
+   <id>http://jpgarcia.com.ar{{ post.id }}</id>
+   <content type="html">{{ post.content | xml_escape }}</content>
+ </entry>
+ {% endfor %}
+ 
+</feed>
